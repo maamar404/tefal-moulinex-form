@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groupe SEB</title>
+    <style>
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: url('images/bg.jpg') center no-repeat;
+            background-size: cover;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* NOUVELLE STRUCTURE POUR GÉRER LE SCROLL */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .brand-logo {
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        .brand-logo img {
+            max-width: 80%;
+            height: auto;
+            padding: 20px 0 0 0;
+        }
+    
+        
+        .container {
+            margin: 15px auto;
+            margin-top: 50px;
+            padding: 12px;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Section principale */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .desktop-side-banner {
+            display: none;
+        }
+
+        /* Mobile banner - hidden by default */
+        .mobile-banner {
+            display: none;
+            width: auto;
+            height: auto;
+            margin: -35px -30px 20px -30px; /* Negative margins equal to the form-container's padding */
+            overflow: hidden;
+        }
+
+        .mobile-banner img {
+            width: 100%;
+            display: block;/* Removes bottom whitespace/gap */
+            height: auto;
+        }
+        
+        /* Formulaire compact - AMÉLIORATIONS MOBILE */
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 35px 30px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 0 0 10px 0;
+            color: #47525e;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        p{
+            text-align: center;
+            margin: 0 0 25px 0;
+            color: #47525e;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .form-group {
+            margin-bottom: 18px;
+        }
+        
+        /* Nouveau conteneur pour Nom et Prénom côte à côte */
+        .name-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        label {
+            display: flex;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #47525e;
+            font-size: 14px;
+            justify-content: space-between;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #fefbf6;
+            min-height: 25px;
+        }
+        
+        input:focus, select:focus {
+            border-color: #47525e;
+            outline: none;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(71, 82, 94, 0.15);
+        }
+   
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            background-color: #fefbf6;
+            padding: 12px 14px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            align-items: center;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+
+        /* RADIO BUTTON FIXES FOR ALL DEVICES */
+        .radio-option input[type="radio"] {
+            width: auto !important;
+            -webkit-tap-highlight-color: transparent !important; /* Remove tap highlight on iOS */
+        }
+        
+
+
+        /* Remove all focus styles */
+        .radio-option input[type="radio"]:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            border-color: #ccc !important;
+        }
+        
+        .radio-option label {
+            margin-bottom: 0;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        
+        /* Styles pour la case à cocher et le texte de consentement */
+        .consent-group {
+            margin: 25px 0 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .consent-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .consent-checkbox input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+            min-height: auto;
+        }
+        
+        .consent-checkbox label {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #495057;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .drop-zone {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .drop-zone input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        button {
+            background-color: #f02424;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            margin: 20px 0 10px;
+            position: relative;
+        }
+        
+        button:hover {
+            background-color: #a50909;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff30;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        /* Popup messages */
+        .popup-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            animation: slideDown 0.3s ease-out;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .popup-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .popup-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        .popup-hide {
+            animation: slideUp 0.3s ease-in forwards;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+        
+        /* Texte légal bilingue */
+
+        .legal-container {
+            display: flex;
+            flex-direction: row; /* Side by side on desktop */
+            gap: 30px; /* Space between the two languages */
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .legal-block {
+            flex: 1; /* Both paragraphs take equal width */
+        }
+
+        .text-fr p{
+            text-align: left;
+            direction: ltr;
+        }
+
+        .legal-block p {
+            color: #fff;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .text-ar p {
+            text-align: right;
+            direction: rtl; /* Ensures correct Arabic punctuation/flow */
+        }
+        
+        /* Footer avec arrière-plan sombre - CORRECTION */
+        footer {
+            width: 100%;
+            position: relative;
+        }
+
+        .copyright-container {
+            background-color: #012041;
+            width: 100%;
+            padding: 8px 0;
+            margin-top: 50px;
+        }
+
+        .copyright-container p {
+            text-align: center;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 300;
+            margin-bottom: 0;
+
+        }
+
+        /* Messages d'erreur */
+        .error {
+            color: #d63031;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error.show {
+            display: block;
+        }
+        
+        .field-error {
+            border-color: #d63031 !important;
+        }
+
+        @media (max-width: 1200px) {
+
+             /* Show mobile header image only on mobile */
+            .mobile-banner {
+                display: block;
+            }
+        
+            
+        }
+            
+        /* MOBILE - AMÉLIORATIONS IMPORTANTES */
+        @media (max-width: 768px) {
+            .container {
+                padding: 13px;
+                margin-top: 15px;
+                max-width: 100%;
+            }
+
+
+            .form-container {
+                padding: 25px 20px;
+                margin: 0 10px;
+                width: calc(100% - 20px);
+                max-width: none;
+            }
+
+            .mobile-banner {
+                display: block;
+                margin: -25px -20px 20px -20px; /* Adjust negative margins to match new padding */
+            }
+            
+            h1 {
+                font-size: 20px;
+                margin: 0 0 10px 0;
+            }
+            p {
+                font-size: 20px;
+                margin: 0 0 20px 0;
+            }
+            
+            input, select {
+                padding: 14px 12px;
+                font-size: 16px;
+                min-height: 25px;
+            }
+
+            .radio-group {
+                padding: 12px 14px !important; /* Use desktop padding */
+                min-height: 25px !important; /* Use desktop height */
+                gap: 15px !important; /* Use desktop gap */
+            }
+            
+            .radio-option label {
+                font-size: 14px !important; /* Use desktop font size */
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            .name-fields {
+                gap: 12px;
+            }
+            
+            /* Styles mobiles pour la case à cocher */
+            .consent-group {
+                margin: 20px 0 15px;
+                padding: 12px;
+            }
+            
+            .consent-checkbox {
+                gap: 8px;
+            }
+            
+            .consent-checkbox label {
+                font-size: 13px;
+            }
+            
+            button {
+                padding: 16px 20px;
+                font-size: 17px;
+                margin: 20px 0 8px;
+            }
+
+            .copyright-container p {
+             font-size: 13px;
+            }
+
+            .legal-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* MOBILE LANDSCAPE - FIX FOR ROTATION */
+        @media (max-width: 768px) and (orientation: landscape) {
+
+            
+            .container {
+                margin-top: 10px;
+            }
+            
+            .mobile-banner {
+                height: auto;
+                margin-bottom: 10px;
+            }
+            
+            .form-container {
+                padding: 15px 15px;
+            }
+
+            .copyright-container p {
+             font-size: 13px;
+            }
+        }
+
+        /* MOBILE TRÈS PETIT - OPTIMISATIONS SUPPLÉMENTAIRES */
+        @media (max-width: 500px) {
+            .container {
+                padding: 10px;
+                margin-top: 20px;
+            }
+            
+            .form-container {
+                padding: 22px 18px;
+                margin: 0 8px;
+                width: calc(100% - 16px);
+            }
+
+            .mobile-banner {
+                /* Matches the 22px 18px padding for very small screens */
+                margin: -22px -18px 20px -18px;
+            }
+            
+            h1 {
+                font-size: 19px;
+                margin: 0 0 10px 0;
+            }
+            p {
+                font-size: 19px;
+                margin: 0 0 18px 0;
+            }
+            
+            /* Sur mobile très petit, retour à la disposition verticale */
+            .name-fields {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            
+            input, select {
+                padding: 13px 12px;
+                min-height: 25px;
+                font-size: 16px;
+            }
+            
+            .radio-group {
+                flex-direction: row;
+                gap: 5px;
+                padding: 8px 12px; /* CORRECTION */
+                align-items: center; /* CORRECTION */
+                min-height: 42px; /* CORRECTION */
+            }
+            
+            .radio-option {
+                width: auto; /* CORRECTION */
+            }
+            
+            /* Styles mobiles très petits pour la case à cocher */
+            .consent-group {
+                margin: 18px 0 12px;
+                padding: 10px;
+            }
+            
+            .consent-checkbox {
+                gap: 6px;
+            }
+            
+            .consent-checkbox label {
+                font-size: 12px;
+            }
+            
+            button {
+                padding: 15px 18px;
+                font-size: 16px;
+                margin: 18px 0 6px;
+            }
+
+            .copyright-container p {
+             font-size: 13px;
+            }
+
+        }
+        
+        /* POUR LES TRÈS PETITS ÉCRANS (iPhone 5/SE) */
+        @media (max-width: 360px) {
+            .form-container {
+                padding: 20px 15px;
+                margin: 0 5px;
+                width: calc(100% - 10px);
+            }
+            
+            h1 {
+                font-size: 16px;
+            }
+            
+            input, select {
+                padding: 12px 10px;
+                min-height: 25px;
+            }
+            
+            .radio-group {
+                padding: 6px 10px; /* CORRECTION */
+                min-height: 25px; /* CORRECTION */
+            }
+            
+            /* Styles pour très petits écrans pour la case à cocher */
+            .consent-group {
+                margin: 15px 0 10px;
+                padding: 8px;
+            }
+            
+            .consent-checkbox {
+                gap: 5px;
+            }
+            
+            .consent-checkbox label {
+                font-size: 11px;
+            }
+            
+            button {
+                padding: 14px 16px;
+            }
+            
+            .copyright-container p {
+             font-size: 11px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            .main-content {
+                flex-direction: row; /* Align banner and form horizontally */
+                align-items: stretch; /* Make both same height */
+                max-width: 1200px; /* Adjust based on your preference */
+                margin: 0 auto;
+                background-color: rgba(255, 255, 255, 0.95);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                overflow: hidden; /* Clips the image corners if the container has border-radius */
+            }
+
+            .desktop-side-banner {
+                display: block;
+                flex: 1; /* Takes up 50% of the space */
+                min-width: 400px;
+            }
+
+            .desktop-side-banner img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Ensures image fills space without stretching */
+                display: block;
+            }
+
+            .form-container {
+                flex: 1; /* Takes up the other 50% */
+                box-shadow: none; /* Remove individual shadow since main-content has it */
+                margin: 0;
+            }
+            
+            /* Hide the mobile banner when the side banner is visible */
+            .mobile-banner {
+                display: none !important;
+            }
+
+        
+        }
+    </style>
+</head>
+<body>
+    <!-- NOUVELLE STRUCTURE POUR GÉRER LE SCROLL -->
+    <div class="page-wrapper">
+
+        <div class="brand-logo">
+            <img src="images/brand_logo.png" alt="Groupe SEB Logo">
+        </div>
+        
+        <!-- Popup messages -->
+        <div id="success-popup" class="popup-message popup-success" style="display: none;">
+            <h3>✅ Enregistrement réussi !</h3>
+            <p>Vos informations ont été enregistrées avec succès.</p>
+        </div>
+
+        <div id="error-popup" class="popup-message popup-error" style="display: none;">
+            <h3>❌ Erreur</h3>
+            <p id="error-message">Une erreur est survenue.</p>
+        </div>
+
+        <div class="container">
+
+            <div class="main-content">
+
+                <div class="desktop-side-banner">
+                    <img src="images/banner_side.jpg" alt="Banner Side">
+                </div>
+                <div class="form-container">
+                    <div class="mobile-banner">
+                        <img src="images/banner_mobile.jpg" alt="banner">
+                    </div>
+                    <h1>Enregistrez vos informations</h1>
+                    <p class="arabic-text">يرجى تسجيل معلوماتكم</p>
+                    
+                    <form id="registration-form">
+                        <div class="form-group">
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="mr" name="civility" value="M." required>
+                                    <label for="mr">M. / السيد</label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="mrs" name="civility" value="Mme">
+                                    <label for="mrs">Mme / السيدة</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Nom et Prénom côte à côte -->
+                        <div class="form-group name-fields">
+                            <div>
+                                <label><span>Nom</span> <span class="arabic">الاسم</span></label>
+                                <input type="text" id="lastname" name="lastname" required>
+                            </div>
+                            <div>
+                                <label><span>Prénom</span> <span class="arabic">النسب</span></label>
+                                <input type="text" id="firstname" name="firstname" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><span>Date d'anniversaire</span> <span class="arabic">تاريخ الازدياد</span></label>
+                            <input type="date" id="birthdate" name="birthdate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><span>Ville</span> <span class="arabic">المدينة</span></label>
+                            <select name="city" id="city-select" required>
+                                <option value="">Sélectionnez une ville / اخترالمدينة</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><span>Numéro de téléphone</span> <span class="arabic">رقم الهاتف</span></label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><span>Email</span> <span class="arabic">البريد الإلكتروني</span></label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label><span>CIN</span> <span class="arabic">رقم البطاقة الوطنية</span></label>
+                            <input type="text" id="cin" name="cin" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><span>Magasin</span> <span class="arabic">متجر الشراء</span></label>
+                            <input type="text" id="store" name="store" placeholder="Nom du magasin / اسم المتجر" required>
+                        </div>
+
+                        <div class="file-upload">
+                            <label><span>Upload</span> <span class="arabic">تحميل وصل الشراء</span></label>
+                            <div class="drop-zone" id="drop-zone">
+                                <span id="file-label">Click to upload receipt / تحميل الوصل</span>
+                                <input type="file" id="receipt" name="receipt" accept=".jpg, .jpeg, .png, image/*" required>
+                            </div>
+                            <div id="file-name-display" style="font-size: 13px; color: #f02424; margin-top: 5px; font-weight: 600; text-align: center;"></div>
+                        </div>
+
+                        
+                        <button type="submit" id="submit-btn">
+                            <span id="button-text">Soumettre / إرسال</span>
+                            <div class="loading-spinner" id="loading-spinner"></div>
+                        </button>
+
+                        <!-- NOUVEAU: Case à cocher et texte de consentement -->
+                        <div class="consent-group">
+                            <div class="consent-checkbox">
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <label for="consent">Les informations recueillies via ce formulaire sont enregistrées par Groupe SEB MAROC<br>
+                                       المغرب SEB يتم تسجيل المعلومات التي يتم جمعها عبر هذه الاستمارة من طرف مجموعة 
+                            
+                                </label>           
+                            </div>
+                        </div>
+
+                        <div class="reglement-link" style="text-align: center; margin-top: 20px; margin-bottom: -10px;">
+                            <a href="RÈGLEMENT DU JEU CONCOURS TEFAL MOULINEX.pdf" target="_blank" style="color: #f02424; margin-bottom: 10px ; font-size: 13px; font-weight: 600; text-decoration: underline; display: flex; flex-direction: column; gap: 2px;">
+                                <span>Consulter le règlement du jeu concours (PDF)</span>
+                                <span style="font-family: Arial, sans-serif;">الاطلاع على قانون المسابقة</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="legal-container">
+            <div class="legal-block text-fr">
+                <p>
+                Les informations recueillies via ce formulaire sont enregistrées par Groupe SEB MAROC.
+                Elles ne seront en aucun cas partagées avec des tiers.
+                Conformément à la loi 09-08, vous pouvez exercer vos droits d'accès, de rectification et de suppression de vos données en nous contactant à contact@groupeseb.com.<br>
+                En soumettant ce formulaire, vous acceptez que vos données soient utilisées uniquement par Groupe SEB MAROC à des fins de contact.
+                </p>
+            </div>
+
+            <div class="legal-block text-ar">
+                <p>
+                    يتم تسجيل المعلومات التي يتم جمعها عبر هذه الاستمارة من طرف مجموعة SEB المغرب.
+                    لن يتم مشاركة هذه المعلومات مع أي طرف ثالث تحت أي ظرف من الظروف.
+                    وفقًا لأحكام القانون رقم 09-08 المتعلق بحماية الأشخاص الذاتيين تجاه معالجة المعطيات ذات الطابع الشخصي، يحق لكم ممارسة حقوقكم في الاطلاع على بياناتكم، وتصحيحها، وحذفها من خلال التواصل معنا عبر البريد الإلكتروني التالي : contact@groupeseb.com<br>
+                    من خلال إرسال هذه الاستمارة، فإنكم توافقون على أن تُستخدم بياناتكم حصريًا من طرف مجموعة SEB المغرب ولأغراض التواصل فقط.
+                </p>
+            </div>
+            </div>
+        
+        <!-- footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="copyright-container">
+                    <p>COPYRIGHT &copy; GROUPE SEB MAROC 2025 / Tous les droits sont réservés.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+
+        // Fonction pour afficher le message de succès
+        function showSuccessMessage() {
+            const successPopup = document.getElementById('success-popup');
+            successPopup.style.display = 'block';
+
+            // Masquer automatiquement après 5 secondes
+            setTimeout(() => {
+                hidePopup(successPopup);
+            }, 5000);
+        }
+
+        // Fonction pour afficher le message d'erreur
+        function showErrorMessage(message) {
+            const errorPopup = document.getElementById('error-popup');
+            const errorMessage = document.getElementById('error-message');
+
+            errorMessage.textContent = message;
+            errorPopup.style.display = 'block';
+
+            // Masquer automatiquement après 8 secondes
+            setTimeout(() => {
+                hidePopup(errorPopup);
+            }, 8000);
+        }
+
+        // Fonction pour masquer un popup
+        function hidePopup(popup) {
+            if (popup) {
+                popup.classList.add('popup-hide');
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                    popup.classList.remove('popup-hide');
+                }, 300);
+            }
+        }
+
+        // Permettre de fermer manuellement en cliquant
+        document.getElementById('success-popup').addEventListener('click', function() {
+            hidePopup(this);
+        });
+
+        document.getElementById('error-popup').addEventListener('click', function() {
+            hidePopup(this);
+        });
+
+
+        // Fonctions d'affichage des erreurs
+        function showFieldError(fieldName, message) {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.classList.add('field-error');
+
+                let errorElement = field.parentNode.querySelector('.error');
+                if (!errorElement) {
+                    errorElement = document.createElement('div');
+                    errorElement.className = 'error';
+                    field.parentNode.appendChild(errorElement);
+                }
+
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+
+        function hideAllErrors() {
+            document.querySelectorAll('.error').forEach(error => {
+                error.classList.remove('show');
+            });
+
+            document.querySelectorAll('.field-error').forEach(field => {
+                field.classList.remove('field-error');
+            });
+        }
+
+        const fileInput = document.getElementById('receipt');
+        const fileLabel = document.getElementById('file-label');
+        const fileNameDisplay = document.getElementById('file-name-display');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                const name = this.files[0].name;
+
+                // Option A: Change the text inside the box
+                fileLabel.textContent = "Fichier sélectionné : " + name;
+
+                // Option B: Show it in the dedicated div below the box (cleaner)
+                fileNameDisplay.textContent = "✅ " + name;
+
+                // Optional: Change border color to show success
+                document.getElementById('drop-zone').style.borderColor = "#f02424";
+            } else {
+                fileLabel.textContent = "Click to upload receipt / تحميل الوصل";
+                fileNameDisplay.textContent = "";
+            }
+        });
+
+        // Form submission handler
+        document.getElementById('registration-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Hide any previous errors
+            hideAllErrors();
+
+            // Get form elements
+            const submitBtn = document.getElementById('submit-btn');
+            const buttonText = document.getElementById('button-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            buttonText.style.opacity = '0';
+            loadingSpinner.style.display = 'block';
+
+            try {
+                // Create FormData object with all form fields
+                const formData = new FormData(this);
+
+                // Submit form to PHP backend
+                const response = await fetch('submit_form.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Show success message
+                    showSuccessMessage();
+
+                    // Reset form
+                    this.reset();
+                    fileLabel.textContent = "Click to upload receipt / تحميل الوصل";
+                    fileNameDisplay.textContent = "";
+                    document.getElementById('drop-zone').style.borderColor = "#ccc";
+                } else {
+                    // Show error message
+                    showErrorMessage(result.message);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                showErrorMessage('Une erreur est survenue. Veuillez réessayer. / An error occurred. Please try again.');
+            } finally {
+                // Re-enable submit button and hide loading
+                submitBtn.disabled = false;
+                buttonText.style.opacity = '1';
+                loadingSpinner.style.display = 'none';
+            }
+        });
+
+        const cities = [
+        "Casablanca", "Rabat", "Marrakech", "Tanger", "Agadir", "Fès",
+        "Meknès", "Oujda", "Kenitra", "Tetouan", "Safi", "Mohammedia", 
+        "Khouribga", "El Jadida", "Béni Mellal", "Taza", "Khémisset",
+         "Taourirt", "Guelmim", "Berrechid", "Fquih Ben Salah", 
+         "Ouarzazate", "Séfrou", "Souk El Arbaa", "Tan-Tan", "Sidi Slimane", 
+         "Errachidia", "Guercif", "Oulad Teïma", "Ben Guerir", "Tifelt", 
+         "Lqliaa", "Taroudant", "Sefrou", "Essaouira", "Fnideq", "Sidi Kacem", 
+         "Tiznit", "Youssoufia", "Martil", "Afourar", 
+         "Ahfir", "Ain Harrouda", "Ait Melloul", "Al Hoceima", "Asilah", "Azrou", 
+         "Boujdour", "Bouznika", "Chefchaouen", "Dakhla", "El Hajeb", 
+         "El Kelaa des Sraghna", "Ifrane", "Imzouren",
+          "Inezgane", "Jerada", "Kasba Tadla", "Ksar El Kebir", "Laayoune", 
+          "Larache", "Mehdya", "Midelt", "Nador", "Ouazzane", "Oued Zem", 
+          "Ouislane", "Rissani", "Saidia", "Settat", 
+            "Skhirat", "Smara", "Tamanar", "Tamesna", "Tarfaya",
+             "Temara", "Zaio", "Zemamra"
+            ];
+
+            const citySelect = document.getElementById('city-select');
+            
+            // Réinitialiser le menu
+            citySelect.innerHTML = '<option value="">Sélectionnez une ville / اختر المدينة</option>';
+
+            // Ajouter chaque ville à la liste
+            cities.sort().forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.toLowerCase();
+                option.textContent = city.toUpperCase();
+                citySelect.appendChild(option);
+            });
+
+    </script>
+</body>
+</html>
